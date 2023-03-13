@@ -66,35 +66,39 @@ public class GameTest {
                 });
 
     }
-
     @Test
     public void testNotFaundSecondPlayer() {
         Game game = new Game();
-        Player ivan = new Player(1, "Иван", 70);
-        Player fedor = new Player(2, "Федор", 120);
+        Player ivan = new Player(1, "Иван", 100);
+        Player fedor = new Player(2, "Федор", 70);
 
         game.register(ivan);
         game.register(fedor);
-        int expected = 1;
-        int actual = game.round("Иван", "Федор");
 
-        Assertions.assertThrows(expected, actual);
+        Assertions.assertThrows(NotRegisteredException.class,
+                () -> {
+                    game.round("Иван", "Игорь");
+                });
 
     }
-
     @Test
-    public void testNotFaundAllPlayers() {
+    public void testNotFaundAllPlayer() {
         Game game = new Game();
-        Player ivan = new Player(1, "Иван", 70);
-        Player fedor = new Player(2, "Федор", 100);
+        Player ivan = new Player(1, "Иван", 100);
+        Player fedor = new Player(2, "Федор", 70);
 
         game.register(ivan);
         game.register(fedor);
-        int expected = 0;
-        int actual = game.round("Илья", "Игорь");
 
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertThrows(NotRegisteredException.class,
+                () -> {
+                    game.round("Антон", "Игорь");
+                });
 
     }
+
+
+
+
 
 }
